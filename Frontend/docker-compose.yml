@@ -1,0 +1,28 @@
+services:
+  svelt_postgres:
+    image: postgres:latest
+    container_name: svelt_postgres
+    environment:
+      POSTGRES_DB: webblog
+      POSTGRES_USER: takigawa
+      POSTGRES_PASSWORD: 1521241za
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  svelt_pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: svelt_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: takigawaleo@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 1521241za
+    ports:
+      - "6082:80"
+    depends_on:
+      - svelt_postgres
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
